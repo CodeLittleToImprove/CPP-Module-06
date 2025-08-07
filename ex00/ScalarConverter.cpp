@@ -10,12 +10,14 @@ ScalarConverter::ScalarConverter()
 // Copy constructor
 ScalarConverter::ScalarConverter(const ScalarConverter& other)
 {
+	(void) other;
 	// std::cout << "Copy constructor called" << std::endl;
 }
 
 // Copy Assignment operator overload
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter& other)
 {
+	(void) other;
 	// std::cout << "Copy assignment operator called" << std::endl;
 	return (*this);
 }
