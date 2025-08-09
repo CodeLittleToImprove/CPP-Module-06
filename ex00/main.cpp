@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 
+#include <cmath>
+#include <math.h>
+
 #include "ScalarConverter.hpp"
 
 int main(int argc, char *argv[])
@@ -26,16 +29,44 @@ int main(int argc, char *argv[])
 		// 	std::cout << "argv[i]" "is unknown" << std::endl;
 		// }
 		// try to use strtol
-		bool isFloat = false;
-		char* end;
-		long double floatNumber = strtod(argv[1], &end);
-		std::cout << "end: " << end << std::endl;
-		std::cout << "double: " << floatNumber << std::endl;
-
-		long int integerNumber = strtol(argv[1], &end, 10);
-		std::cout << "end: " << end << std::endl;
-		std::cout <<  "int: " << integerNumber << std::endl;
-		return (0);
+		const std::string inputArgv= argv[1];
+		std::cout << "inputArgv : " << inputArgv << std::endl;
+		ScalarConverter::convert(inputArgv);
+		// bool isFloat = false;
+		// bool isChar = false;
+		// char* end;
+		// long double floatNumber = strtod(argv[1], &end);
+		// double intpart;
+		// // modf(floatNumber, &intpart);
+		// // std::cout << "intpart: " << intpart << std::endl;
+		// std::cout << "end: " << end << std::endl;
+		// std::cout << "double: " << floatNumber << std::endl;
+		// if (ceil(floatNumber) != floor(intpart))
+		// {
+		// 	std::cout << "ceil: " << ceil(floatNumber) << std::endl;
+		// 	std::cout << "floor: " << floor(intpart) << std::endl;
+		// 	std::cout << "number is a float number" << std::endl;
+		// }
+		// else
+		// {
+		// 	std::cout << "ceil: " << ceil(floatNumber) << std::endl;
+		// 	std::cout << "floor: " << floor(intpart) << std::endl;
+		// 	std::cout << "number is not a float number" << std::endl;
+		// }
+		//
+		//
+		// long int integerNumber = strtol(argv[1], &end, 10);
+		// std::cout << "end: " << end << std::endl;
+		// std::cout <<  "int: " << integerNumber << std::endl;
+		//
+		// if (integerNumber == 0)
+		// {
+		// 	char c = argv[1][0];
+		// 	if (isalpha(c))
+		// 		isChar = true;
+		// 	std::cout << "char: " << c << std::endl;
+		// }
+		// return (0);
 	}
 	return (-1);
 }
