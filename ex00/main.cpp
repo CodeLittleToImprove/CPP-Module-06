@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 		// }
 		// try to use strtol
 		const std::string inputArgv= argv[1];
-		std::cout << "inputArgv : " << inputArgv << std::endl;
+		std::cout << "string inputArgv : " << inputArgv << std::endl;
 		ScalarConverter::convert(inputArgv);
 		// bool isFloat = false;
 		// bool isChar = false;

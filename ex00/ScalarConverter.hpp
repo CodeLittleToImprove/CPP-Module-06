@@ -2,6 +2,7 @@
 
 # include <iostream>
 # include <cstdlib>
+# include <math.h>
 
 class ScalarConverter
 {
