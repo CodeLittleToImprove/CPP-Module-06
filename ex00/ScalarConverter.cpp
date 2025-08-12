@@ -36,52 +36,134 @@ bool isAllAlphabetic(const std::string& str)
 	{
 		if (isalpha(str[i]) == 0)
 		{
-			std::cout << str[i] << " is not alphabetic\n";
+			std::cout << str[i] << " is not all alphabetic\n";
 			return false;
 		}
 	}
 	return true;
 }
 
-void ScalarConverter::convert(const std::string &input)
+bool isPseudoLiteral(const std::string& input)
 {
-	bool isFloat = false;
+	if (input == "nan" || input == "+inf" || input == "-inf" ||
+	input == "nanf" || input == "+inff" || input == "-inff")
+	{
+		return true;
+	}
+	return false;
+}
+
+bool isNumericLiteral(const std::string& str)
+{
+	bool hasDecimalPoint = false;
+	bool hasDigits = false;
+	std::size_t i = 0;
+
+	if (str.empty())
+		return false;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	for (; i < str.size(); ++i)
+	{
+		char c = str[i];
+
+		if (isdigit(c))
+			hasDigits = true;
+		else if (c == '.' && !hasDecimalPoint)
+			hasDecimalPoint = true;
+		else if ((c == 'f' || c == 'F') && i == str.size() - 1)
+			return hasDigits;
+		else
+			return false;
+	}
+
+	return hasDigits;
+
+}
+
+void ScalarConverter::convert(const std::string& input)
+{
 	bool isChar = false;
+	bool isInt = false;
+	bool isFloat = false;
+	bool isDouble = false;
+	bool needNbrConvert = true;
+	bool isAllLetters = false;
 
 
 	if (isAllAlphabetic(input))
 	{
-		isChar = true;
+		isAllLetters = true;
 		std::cout << "is all alphabetic" << std::endl;
 	}
-	if (isChar && input.size() == 1)
+	if (isAllLetters && input.size() == 1)
 	{
 		char c = input[0];
-		std::cout << c << std::endl;
+		std::cout << "single char: " << c << std::endl;
+		isChar = true;
 		return ;
 	}
-	char* notNumeric;
-	// std::cout << "pre strtod: " << notNumeric << std::endl;
-	long double floatNbr = strtod(input.c_str(), &notNumeric); // string to double
-	if (*notNumeric != '\0')
+	if (isPseudoLiteral(input))
 	{
-		std::cout << "not strict numeric: " << notNumeric << std::endl;
+		needNbrConvert = false;
+		std::cout << "no need for nbr conversion" << std::endl;
 	}
-	double intpart;
-	int intNbr = modf(floatNbr, &intpart);
-	std::cout << "floatNbr: " << floatNbr << std::endl;
-	std::cout << "intpart: " << intpart << std::endl;
-	if (ceil(floatNbr) != floor(intpart))
+
+	if (isNumericLiteral(input))
 	{
-		std::cout << "ceil: " << ceil(floatNbr) << std::endl;
-		std::cout << "floor: " << floor(intpart) << std::endl;
-		std::cout << "number is a float number" << std::endl;
-		isFloat = true;
+		std::cout << "need for nbr conversion" << std::endl;
+		char* notNumeric;
+		long double floatNbr = strtod(input.c_str(), &notNumeric); // string to double
+		if (*notNumeric != '\0')
+		{
+			std::cout << "not strict numeric: " << notNumeric << std::endl;
+		}
+		double intpart;
+		int intNbr = modf(floatNbr, &intpart); // split double into integral and fraction parts
+		std::cout << "floatNbr: " << floatNbr << std::endl;
+		std::cout << "intpart: " << intpart << std::endl;
+		if (floatNbr != intpart)
+		{
+			// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
+			// std::cout << "floor: " << floor(intpart) << std::endl;
+			std::cout << "number is a float number" << std::endl;
+			isFloat = true;
+		}
+		else
+		{
+			// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
+			// std::cout << "floor: " << floor(intpart) << std::endl;
+			std::cout << "number is not a float number" << std::endl;
+		}
+
 	}
-	else
+	if (isChar == true)
 	{
-		std::cout << "ceil: " << ceil(floatNbr) << std::endl;
-		std::cout << "floor: " << floor(intpart) << std::endl;
-		std::cout << "number is not a float number" << std::endl;
+		std::cout << "no need for nbr conversion" << std::endl;
+		return;
 	}
+	// char* notNumeric;
+	// // std::cout << "pre strtod: " << notNumeric << std::endl;
+	// long double floatNbr = strtod(input.c_str(), &notNumeric); // string to double
+	// if (*notNumeric != '\0')
+	// {
+	// 	std::cout << "not strict numeric: " << notNumeric << std::endl;
+	// }
+	// double intpart;
+	// int intNbr = modf(floatNbr, &intpart);
+	// std::cout << "floatNbr: " << floatNbr << std::endl;
+	// std::cout << "intpart: " << intpart << std::endl;
+	// if (floatNbr != intpart)
+	// {
+	// 	// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
+	// 	// std::cout << "floor: " << floor(intpart) << std::endl;
+	// 	std::cout << "number is a float number" << std::endl;
+	// 	isFloat = true;
+	// }
+	// else
+	// {
+	// 	// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
+	// 	// std::cout << "floor: " << floor(intpart) << std::endl;
+	// 	std::cout << "number is not a float number" << std::endl;
+	// }
 }
