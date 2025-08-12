@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/.idea/runConfigurations/cpp06_ex00.xml
+/.idea/runConfigurations/cpp06_ex00__1_.xml
