@@ -1,4 +1,3 @@
-
 #include "ScalarConverter.hpp"
 
 #include <algorithm>
@@ -10,14 +9,14 @@ ScalarConverter::ScalarConverter()
 }
 
 // Copy constructor
-ScalarConverter::ScalarConverter(const ScalarConverter& other)
+ScalarConverter::ScalarConverter(const ScalarConverter &other)
 {
 	(void) other;
 	// std::cout << "Copy constructor called" << std::endl;
 }
 
 // Copy Assignment operator overload
-ScalarConverter &ScalarConverter::operator=(const ScalarConverter& other)
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
 {
 	(void) other;
 	// std::cout << "Copy assignment operator called" << std::endl;
@@ -30,7 +29,7 @@ ScalarConverter::~ScalarConverter(void)
 	// std::cout << "Destructor called" << std::endl;
 }
 
-bool isAllAlphabetic(const std::string& str)
+bool isAllAlphabetic(const std::string &str)
 {
 	for (std::size_t i = 0; i < str.size(); ++i)
 	{
@@ -43,17 +42,17 @@ bool isAllAlphabetic(const std::string& str)
 	return true;
 }
 
-bool isPseudoLiteral(const std::string& input)
+bool isPseudoLiteral(const std::string &input)
 {
 	if (input == "nan" || input == "+inf" || input == "-inf" ||
-	input == "nanf" || input == "+inff" || input == "-inff")
+		input == "nanf" || input == "+inff" || input == "-inff")
 	{
 		return true;
 	}
 	return false;
 }
 
-bool isNumericLiteral(const std::string& str)
+bool isNumericLiteral(const std::string &str)
 {
 	bool hasDecimalPoint = false;
 	bool hasDigits = false;
@@ -67,17 +66,28 @@ bool isNumericLiteral(const std::string& str)
 	{
 		char c = str[i];
 		if (isdigit(c))
+		{
+			// std::cout << " has digits\n";
 			hasDigits = true;
+		}
 		else if (c == '.' && !hasDecimalPoint)
+		{
+			// std::cout << " in comma check\n";
 			hasDecimalPoint = true;
+		}
+
 		else if ((c == 'f' || c == 'F') && i == str.size() - 1)
 			return hasDigits;
 		else
+		{
+			std::cout << " returned false in numerical Literal check \n";
 			return false;
+		}
 	}
 	return hasDigits;
 }
-bool isFloatNotation(const std::string& str)
+
+bool isFloatNotation(const std::string &str)
 {
 	if (str.empty())
 		return false;
@@ -86,11 +96,10 @@ bool isFloatNotation(const std::string& str)
 		std::cout << "contains a float notation" << std::endl;
 		return true;
 	}
-
 	return false;
 }
 
-void ScalarConverter::convert(const std::string& input)
+void ScalarConverter::convert(const std::string &input)
 {
 	bool isChar = false;
 	bool isInt = false;
@@ -105,12 +114,13 @@ void ScalarConverter::convert(const std::string& input)
 		isAllLetters = true;
 		std::cout << "is all alphabetic" << std::endl;
 	}
+
 	if (isAllLetters && input.size() == 1)
 	{
 		char c = input[0];
 		std::cout << "single char: " << c << std::endl;
 		isChar = true;
-		return ;
+		return;
 	}
 	if (isPseudoLiteral(input))
 	{
@@ -118,24 +128,17 @@ void ScalarConverter::convert(const std::string& input)
 		std::cout << "no need for nbr conversion" << std::endl;
 	}
 
-	if (isNumericLiteral(input))
+	if (isNumericLiteral(input) && needNbrConvert == true)
 	{
 		std::cout << "need for nbr conversion" << std::endl;
 		if (isFloatNotation(input))
 			isFloat = true;
-
-		// char* notNumeric;
 		long double tempNbr = strtod(input.c_str(), NULL); // string to double
 		std::cout << "tempNbr " << tempNbr << std::endl;
-		// if (*notNumeric != '\0')
-		// {
-		// 	std::cout << "not strict numeric: " << notNumeric << std::endl;
-		// }
 		double intpart;
 		modf(tempNbr, &intpart); // split double into integral and fraction parts
-		// std::cout << "fractpart: " << fractpart << std::endl;
 		std::cout << "tempNbr: " << tempNbr << std::endl;
-		std::cout << "intpart: " << intpart << std::endl;
+		std::cout << "intpart: " << intpart << std::endl; // int conversion does not work as intended
 		if (tempNbr != intpart)
 		{
 			// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
@@ -159,49 +162,31 @@ void ScalarConverter::convert(const std::string& input)
 			// std::cout << "floor: " << floor(intpart) << std::endl;
 			std::cout << "number is not a decimal number" << std::endl;
 			if (intpart >= std::numeric_limits<int>::min() &&
-			intpart <= std::numeric_limits<int>::max() &&
-			std::floor(intpart) == intpart) // no fraction
+			    intpart <= std::numeric_limits<int>::max() &&
+			    std::floor(intpart) == intpart) // no fraction
 			{
 				int intNbr = static_cast<int>(intpart);
 				std::cout << "intNbr: " << intNbr << std::endl;
 				isInt = true;
 			}
-			else {
+			else
+			{
 				std::cout << "cannot convert safely to int" << std::endl;
 			}
-
-
 		}
 
-
-		if (isChar == true)
+		std::cout << "isChar bool:" << isChar << std::endl;
+		std::cout << "isInt bool:" << isInt << std::endl;
+		std::cout << "isFloat bool:" << isFloat << std::endl;
+		std::cout << "isDouble bool:" << isDouble << std::endl;
+		if (!isInt && !isFloat && !isDouble)
 		{
-			std::cout << "no need for nbr conversion" << std::endl;
-			return;
+			std::cout << "conversion not possible" << std::endl;
 		}
-		// char* notNumeric;
-		// // std::cout << "pre strtod: " << notNumeric << std::endl;
-		// long double floatNbr = strtod(input.c_str(), &notNumeric); // string to double
-		// if (*notNumeric != '\0')
+		// if (isChar == true)
 		// {
-		// 	std::cout << "not strict numeric: " << notNumeric << std::endl;
-		// }
-		// double intpart;
-		// int intNbr = modf(floatNbr, &intpart);
-		// std::cout << "floatNbr: " << floatNbr << std::endl;
-		// std::cout << "intpart: " << intpart << std::endl;
-		// if (floatNbr != intpart)
-		// {
-		// 	// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
-		// 	// std::cout << "floor: " << floor(intpart) << std::endl;
-		// 	std::cout << "number is a float number" << std::endl;
-		// 	isFloat = true;
-		// }
-		// else
-		// {
-		// 	// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
-		// 	// std::cout << "floor: " << floor(intpart) << std::endl;
-		// 	std::cout << "number is not a float number" << std::endl;
+		// 	std::cout << "no need for nbr conversion" << std::endl;
+		// 	return;
 		// }
 	}
 }
