@@ -23,8 +23,10 @@ int main(int argc, char *argv[])
 		std::cout << "argv[1] : "<<argv[1] << std::endl;
 		const std::string inputArgv= argv[1];
 		std::cout << "string inputArgv : " << inputArgv << std::endl;
+		std::cout << "inputSize : " << inputArgv.size() << std::endl;
 		ScalarConverter::convert(inputArgv);
 		return 0;
 	}
+		std::cout << "At least one argument needed" << std::endl;
 	return (-1);
 }
