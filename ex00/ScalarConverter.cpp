@@ -1,6 +1,7 @@
 #include "ScalarConverter.hpp"
 
 #include <algorithm>
+#include <iomanip>
 
 // Default constructor
 ScalarConverter::ScalarConverter()
@@ -29,6 +30,42 @@ ScalarConverter::~ScalarConverter(void)
 	// std::cout << "Destructor called" << std::endl;
 }
 
+void printFromChar(char c)
+{
+	if (isprint(c) != 0)
+		std::cout << "c: " << c;
+	// if (c < 0 || c > 127)
+		// std::cout << "char: impossible" << std::endl;
+}
+
+void printFromInt(int n, bool &valid_range)
+{
+	if (n < 0 || n > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if (!isprint(static_cast<char>(n)))
+		std::cout << "char: Non displayable" << std::endl;
+	else
+		std::cout << "char: '" << static_cast<char>(n) << "'" << std::endl;
+	if (valid_range == true)
+	{
+		std::cout << "int: "<< n << std::endl;
+		float f = static_cast<float>(n);
+		std::cout << "float: "<< std::fixed << std::setprecision(1) << f << "f" << std::endl;
+		double d = static_cast<double>(n);
+		std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
+	}
+	else if (valid_range == false)
+	{
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
+	}
+}
+
+// void printFromFloat(float f);
+// void printFromDouble(double d);
+// void printFromPseudoFloat(const std::string &input);
+// void printFromPseudoDouble(const std::string &input);
 
 char convertToChar(const std::string &input)
 {
@@ -106,7 +143,7 @@ std::string literalTypeToString(LiteralType type) // only for  debug
 		case TYPE_DOUBLE:       return "TYPE_DOUBLE";
 		case TYPE_PSEUDO_FLOAT: return "TYPE_PSEUDO_FLOAT";
 		case TYPE_PSEUDO_DOUBLE:return "TYPE_PSEUDO_DOUBLE";
-		default:                                 return "TYPE_INVALID";
+		default:				return "TYPE_INVALID";
 	}
 }
 
@@ -182,19 +219,10 @@ LiteralType detectType(const std::string &input)
 		return num;
 	}
 	return TYPE_INVALID;
-
 }
-
 
 void ScalarConverter::convert(const std::string &input)
 {
-	// enum LiteralType {
-	// 	TYPE_CHAR,
-	// 	TYPE_INT,
-	// 	TYPE_FLOAT,
-	// 	TYPE_PSEUDO_FLOAT,
-	// 	TYPE_PSEUDO_DOUBLE,
-	// };
 	bool valid_range = false;
 	LiteralType type = detectType(input);
 	std::cout << "type: " << literalTypeToString(type) << std::endl;
@@ -202,12 +230,12 @@ void ScalarConverter::convert(const std::string &input)
 	{
 		case TYPE_CHAR:
 		{
-			char c = convertToChar(input);
+			printFromChar(convertToChar(input));
 			break;
 		}
 		case TYPE_INT:
 		{
-			long int i = convertToInt(input, valid_range); // need to when printing to check if valid int value
+			printFromInt(convertToInt(input, valid_range), valid_range); // need to when printing to check if valid int value
 			break;
 		}
 		case TYPE_FLOAT:
@@ -233,80 +261,4 @@ void ScalarConverter::convert(const std::string &input)
 		default:
 			std::cout << "Invalid input" << std::endl;
 	}
-
-
-	// if (isAllLetters && input.size() == 1)
-	// {
-	// 	char c = input[0];
-	// 	std::cout << "single char: " << c << std::endl;
-	// 	isChar = true;
-	// 	return;
-	// }
-	// if (detectPseudo(input))
-	// {
-	// 	needNbrConvert = false;
-	// 	std::cout << "no need for nbr conversion" << std::endl;
-	// }
-	//
-	// if (isNumericLiteral(input) && needNbrConvert == true)
-	// {
-	// 	std::cout << "need for nbr conversion" << std::endl;
-	// 	if (isFloatNotation(input))
-	// 		isFloat = true;
-	// 	long double tempNbr = strtod(input.c_str(), NULL); // string to double
-	// 	std::cout << "tempNbr " << tempNbr << std::endl;
-	// 	double intpart;
-	// 	modf(tempNbr, &intpart); // split double into integral and fraction parts
-	// 	std::cout << "tempNbr: " << tempNbr << std::endl;
-	// 	std::cout << "intpart: " << intpart << std::endl; // int conversion does not work as intended
-	// 	if (tempNbr != intpart)
-	// 	{
-	// 		// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
-	// 		// std::cout << "floor: " << floor(intpart) << std::endl;
-	// 		std::cout << "number is a decimal number" << std::endl;
-	// 		if (isFloat)
-	// 		{
-	// 			float floatNbr = tempNbr;
-	// 			std::cout << "floatNbr: " << floatNbr << std::endl;
-	// 		}
-	// 		else
-	// 		{
-	// 			double doubleNbr = tempNbr;
-	// 			std::cout << "doubleNbr: " << doubleNbr << std::endl;
-	// 			isDouble = true;
-	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		// std::cout << "ceil: " << ceil(floatNbr) << std::endl;
-	// 		// std::cout << "floor: " << floor(intpart) << std::endl;
-	// 		std::cout << "number is not a decimal number" << std::endl;
-	// 		if (intpart >= std::numeric_limits<int>::min() &&
-	// 		    intpart <= std::numeric_limits<int>::max() &&
-	// 		    std::floor(intpart) == intpart) // no fraction
-	// 		{
-	// 			int intNbr = static_cast<int>(intpart);
-	// 			std::cout << "intNbr: " << intNbr << std::endl;
-	// 			isInt = true;
-	// 		}
-	// 		else
-	// 		{
-	// 			std::cout << "cannot convert safely to int" << std::endl;
-	// 		}
-	// 	}
-	//
-	// 	std::cout << "isChar bool:" << isChar << std::endl;
-	// 	std::cout << "isInt bool:" << isInt << std::endl;
-	// 	std::cout << "isFloat bool:" << isFloat << std::endl;
-	// 	std::cout << "isDouble bool:" << isDouble << std::endl;
-	// 	if (!isInt && !isFloat && !isDouble)
-	// 	{
-	// 		std::cout << "conversion not possible" << std::endl;
-	// 	}
-	// 	// if (isChar == true)
-	// 	// {
-	// 	// 	std::cout << "no need for nbr conversion" << std::endl;
-	// 	// 	return;
-	// 	// }
-	// }
 }
