@@ -32,10 +32,19 @@ ScalarConverter::~ScalarConverter(void)
 
 void printFromChar(char c)
 {
-	if (isprint(c) != 0)
-		std::cout << "c: " << c;
-	// if (c < 0 || c > 127)
-		// std::cout << "char: impossible" << std::endl;
+	if (!isprint(static_cast<unsigned char>(c)))
+		std::cout << "char: Non displayable" << std::endl;
+	else
+		std::cout << "char: '" << c << "'" << std::endl;
+
+	int n = static_cast<int>(c); // no cast needed but i like it this way
+	std::cout << "int: " << n << std::endl;
+
+	float f = static_cast<float>(n);
+	std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
+
+	double d = static_cast<double>(n);
+	std::cout << "double: " << std::fixed << std::setprecision(1) << d << std::endl;
 }
 
 void printFromInt(int n, bool &valid_range)
@@ -62,7 +71,28 @@ void printFromInt(int n, bool &valid_range)
 	}
 }
 
-// void printFromFloat(float f);
+void printFromFloat(float f, bool &valid_range)
+{
+	if (f < 0 || f > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if (!isprint(static_cast<char>(f)))
+		std::cout << "char: Non displayable" << std::endl;
+	else
+		std::cout << "char: '" << static_cast<char>(f) << "'" << std::endl;
+	if (valid_range == true)
+	{
+		std::cout << "int: "<< f << std::endl;
+		std::cout << "float: "<< std::fixed << std::setprecision(1) << f << "f" << std::endl;
+		double d = static_cast<double>(f);
+		std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
+	}
+	else if (valid_range == false)
+	{
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
+	}
+}
 // void printFromDouble(double d);
 // void printFromPseudoFloat(const std::string &input);
 // void printFromPseudoDouble(const std::string &input);
@@ -112,6 +142,7 @@ float convertToFloat(const std::string &input, bool &valid_range)
 		return 0.0f;
 
 	valid_range = true;
+	std::cout << "float conversion succesful " << std::endl; // not reaching here
 	return val;
 }
 
@@ -230,17 +261,20 @@ void ScalarConverter::convert(const std::string &input)
 	{
 		case TYPE_CHAR:
 		{
-			printFromChar(convertToChar(input));
+			char c = convertToChar(input);
+			printFromChar(c);
 			break;
 		}
 		case TYPE_INT:
 		{
-			printFromInt(convertToInt(input, valid_range), valid_range); // need to when printing to check if valid int value
+			int i = convertToInt(input, valid_range);
+			printFromInt(i, valid_range); // need to when printing to check if valid int value
 			break;
 		}
 		case TYPE_FLOAT:
 		{
 			float f = convertToFloat(input, valid_range);
+			printFromFloat(f, valid_range);
 			break;
 		}
 		case TYPE_DOUBLE:
