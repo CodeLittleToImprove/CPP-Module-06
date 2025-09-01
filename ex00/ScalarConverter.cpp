@@ -93,9 +93,46 @@ void printFromFloat(float f, bool &valid_range)
 		std::cout << "double: impossible" << std::endl;
 	}
 }
-// void printFromDouble(double d);
-// void printFromPseudoFloat(const std::string &input);
-// void printFromPseudoDouble(const std::string &input);
+void printFromDouble(double d, bool &valid_range)
+{
+	if (d < 0 || d > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if (!isprint(static_cast<char>(d)))
+		std::cout << "char: Non displayable" << std::endl;
+	else
+		std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
+	if (valid_range == true)
+	{
+		std::cout << "int: "<< d << std::endl;
+		float f = static_cast<float>(d);
+		std::cout << "float: "<< std::fixed << std::setprecision(1) << f << "f" << std::endl;
+		std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
+	}
+	else if (valid_range == false)
+	{
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
+	}
+}
+
+void printFromPseudoFloat(float f)
+{
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: "<< std::fixed << std::setprecision(1) << f << "f" << std::endl;
+	double d = static_cast<double>(f);
+	std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
+}
+
+void printFromPseudoDouble(double d)
+{
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	double f = static_cast<float>(d);
+	std::cout << "float: "<< std::fixed << std::setprecision(1) << f << std::endl;
+	std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
+}
 
 char convertToChar(const std::string &input)
 {
@@ -124,7 +161,10 @@ double convertToDouble(const std::string &input, bool &valid_range)
 		return 0.0;
 
 	if (val > std::numeric_limits<double>::max() || val < -std::numeric_limits<double>::max())
+	{
+		std::cout << "overflow double or underflow double" << std::endl;
 		return 0.0;
+	}
 
 	valid_range = true;
 	return val;
@@ -135,14 +175,17 @@ float convertToFloat(const std::string &input, bool &valid_range)
 	char *endptr;
 	float val = strtof(input.c_str(), &endptr);
 
-	if (*endptr != '\0')
+	if (*endptr != '\0'&& *endptr != 'f' && *endptr != 'F')
 		return 0.0f;
 
 	if (val > std::numeric_limits<float>::max() || val < -std::numeric_limits<float>::max())
+	{
+		std::cout << "overflow float or underflow float" << std::endl;
 		return 0.0f;
+	}
 
 	valid_range = true;
-	std::cout << "float conversion succesful " << std::endl; // not reaching here
+	std::cout << "float conversion successful " << std::endl; // not reaching here
 	return val;
 }
 
@@ -279,17 +322,20 @@ void ScalarConverter::convert(const std::string &input)
 		}
 		case TYPE_DOUBLE:
 		{
-			double d = convertToFloat(input,valid_range);
+			double d = convertToDouble(input,valid_range);
+			printFromDouble(d, valid_range);
 			break;
 		}
 		case TYPE_PSEUDO_FLOAT:
 		{
 			float f = getPseudoFloat(input);
+			printFromPseudoFloat(f);
 			break;
 		}
 		case TYPE_PSEUDO_DOUBLE:
 		{
 			double d = getPseudoDouble(input);
+				printFromPseudoDouble(d);
 			break;
 		}
 		default:
