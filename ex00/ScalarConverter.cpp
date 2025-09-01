@@ -103,7 +103,8 @@ void printFromDouble(double d, bool &valid_range)
 		std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
 	if (valid_range == true)
 	{
-		std::cout << "int: "<< d << std::endl;
+		int i = static_cast<int>(d);
+		std::cout << "int: "<< i << std::endl;
 		float f = static_cast<float>(d);
 		std::cout << "float: "<< std::fixed << std::setprecision(1) << f << "f" << std::endl;
 		std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
@@ -130,7 +131,7 @@ void printFromPseudoDouble(double d)
 	std::cout << "char: impossible" << std::endl;
 	std::cout << "int: impossible" << std::endl;
 	double f = static_cast<float>(d);
-	std::cout << "float: "<< std::fixed << std::setprecision(1) << f << std::endl;
+	std::cout << "float: "<< std::fixed << std::setprecision(1) << f << "f" << std::endl;
 	std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
 }
 
@@ -162,7 +163,7 @@ double convertToDouble(const std::string &input, bool &valid_range)
 
 	if (val > std::numeric_limits<double>::max() || val < -std::numeric_limits<double>::max())
 	{
-		std::cout << "overflow double or underflow double" << std::endl;
+		// std::cout << "overflow double or underflow double" << std::endl;
 		return 0.0;
 	}
 
@@ -180,12 +181,12 @@ float convertToFloat(const std::string &input, bool &valid_range)
 
 	if (val > std::numeric_limits<float>::max() || val < -std::numeric_limits<float>::max())
 	{
-		std::cout << "overflow float or underflow float" << std::endl;
+		// std::cout << "overflow float or underflow float" << std::endl;
 		return 0.0f;
 	}
 
 	valid_range = true;
-	std::cout << "float conversion successful " << std::endl; // not reaching here
+	// std::cout << "float conversion successful " << std::endl; // not reaching here
 	return val;
 }
 
@@ -225,12 +226,12 @@ LiteralType detectPseudo(const std::string &input)
 {
 	if (input == "nan" || input == "+inf" || input == "-inf")
 	{
-		std::cout << "found TYPE_PSEUDO_DOUBLE" << std::endl;
+		// std::cout << "found TYPE_PSEUDO_DOUBLE" << std::endl;
 		return TYPE_PSEUDO_DOUBLE;
 	}
 	if (input == "nanf" || input == "+inff" || input == "-inff")
 	{
-		std::cout << "found TYPE_PSEUDO_FLOAT" << std::endl;
+		// std::cout << "found TYPE_PSEUDO_FLOAT" << std::endl;
 		return TYPE_PSEUDO_FLOAT;
 	}
 	return TYPE_INVALID;
@@ -282,14 +283,14 @@ LiteralType detectType(const std::string &input)
 
 	if (input.size() == 1 && isprint(input[0]) && !isdigit(input[0]))
 	{
-		std::cout << "found TYPE_CHAR" << std::endl;
+		// std::cout << "found TYPE_CHAR" << std::endl;
 		return TYPE_CHAR;
 	}
 
 	LiteralType num = detectNumericalLiteral(input);
 	if (num != TYPE_INVALID)
 	{
-		std::cout << "num: " << literalTypeToString(num) << std::endl;
+		// std::cout << "num: " << literalTypeToString(num) << std::endl;
 		return num;
 	}
 	return TYPE_INVALID;
@@ -299,7 +300,7 @@ void ScalarConverter::convert(const std::string &input)
 {
 	bool valid_range = false;
 	LiteralType type = detectType(input);
-	std::cout << "type: " << literalTypeToString(type) << std::endl;
+	// std::cout << "type: " << literalTypeToString(type) << std::endl;
 	switch (type)
 	{
 		case TYPE_CHAR:

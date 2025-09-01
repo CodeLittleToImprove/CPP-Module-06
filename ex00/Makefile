@@ -6,7 +6,7 @@
 #    By: tbui-quo <tbui-quo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 16:12:00 by tbui-quo          #+#    #+#              #
-#    Updated: 2025/04/24 17:44:10 by tbui-quo         ###   ########.fr        #
+#    Updated: 2025/09/01 18:44:10 by tbui-quo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,3 +46,25 @@ fclean: clean
 
 # Optional: rebuild everything (full clean + rebuild)
 re: fclean all
+
+# Run tests
+test: $(TARGET)
+	@echo "Running tests..."
+	@echo "---- Test 1: integer ----"
+	@./$(TARGET) 42
+	@echo "---- Test 2: char ----"
+	@./$(TARGET) a
+	@echo "---- Test 3: float ----"
+	@./$(TARGET) 3.14f
+	@echo "---- Test 4: double ----"
+	@./$(TARGET) 2.71828
+	@echo "---- Test 5: nan ----"
+	@./$(TARGET) nan
+	@echo "---- Test 6: inf ----"
+	@./$(TARGET) inf
+	@echo "---- Test 7: string ----"
+	@./$(TARGET) hello
+	@echo "---- Test 9: nanf ----"
+	@./$(TARGET) nanf
+	@echo "---- Test 10: no argument ----"
+	@./$(TARGET) || true
