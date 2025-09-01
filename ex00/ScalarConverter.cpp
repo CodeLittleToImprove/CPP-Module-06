@@ -254,11 +254,11 @@ LiteralType detectNumericalLiteral(const std::string &str)
 		{
 			hasDigits = true;
 		}
-		else if (c == '.' && !hasDecimalPoint)
+		else if (c == '.' && !hasDecimalPoint && str[0] != '.')
 		{
 			hasDecimalPoint = true;
 		}
-		else if ((c == 'f' || c == 'F') && i == str.size() - 1)
+		else if ((c == 'f' || c == 'F') && i == str.size() - 1 && str[str.size() - 2] != '.')
 			return hasDigits ? TYPE_FLOAT : TYPE_INVALID;
 		else
 		{
@@ -340,6 +340,6 @@ void ScalarConverter::convert(const std::string &input)
 			break;
 		}
 		default:
-			std::cout << "Invalid input" << std::endl;
+			std::cout << "Invalid input, Conversation not possible!" << std::endl;
 	}
 }
