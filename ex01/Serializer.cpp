@@ -30,7 +30,7 @@ Serializer::~Serializer(void)
 	// std::cout << "Destructor called" << std::endl;
 }
 
-
+// uintptr_t is the “safe” integer type big enough to hold any pointer
 uintptr_t Serializer::serialize(Data* ptr)
 {
 	uintptr_t raw = reinterpret_cast<uintptr_t>(ptr);

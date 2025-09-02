@@ -16,9 +16,27 @@
 
 int main()
 {
-	Data* ptr = new Data();
-	ptr->value = "hello cat";
-	std::cout << ptr->value << std::endl;
-//		Serializer::serialize();
-		// return 0;
+	Data d;
+	d.value = "cats are cute";
+
+	std::cout << "Original Data object address: " << &d << std::endl;
+
+	// Serialize pointer → integer
+	uintptr_t raw = Serializer::serialize(&d);
+	std::cout << "Serialized (uintptr_t): " << raw << std::endl;
+
+	// Deserialize integer → pointer
+	Data* restored = Serializer::deserialize(raw);
+	std::cout << "Restored Data object address: " << restored << std::endl;
+
+	if (restored == &d)
+		std::cout << "Pointer restored correctly" << std::endl;
+	else
+		std::cout << "Pointer restore failed" << std::endl;
+
+	std::cout << "Restored Data contents:" << std::endl;
+	std::cout << " value = " << restored->value << std::endl;
+	std::cout << " direct access = " << d.value << std::endl;
+
+	return 0;
 }
