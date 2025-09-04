@@ -49,7 +49,7 @@ void printFromChar(char c)
 
 void printFromInt(int n, bool &valid_range)
 {
-	if (n < 0 || n > 127)
+	if (n < 0 || n > 127 || (n == 0 && valid_range == false))
 		std::cout << "char: impossible" << std::endl;
 	else if (!isprint(static_cast<char>(n)))
 		std::cout << "char: Non displayable" << std::endl;
@@ -73,7 +73,7 @@ void printFromInt(int n, bool &valid_range)
 
 void printFromFloat(float f, bool &valid_range)
 {
-	if (f < 0 || f > 127)
+	if (f < 0 || f > 127 || (f == 0 && valid_range == false))
 		std::cout << "char: impossible" << std::endl;
 	else if (!isprint(static_cast<char>(f)))
 		std::cout << "char: Non displayable" << std::endl;
@@ -95,7 +95,7 @@ void printFromFloat(float f, bool &valid_range)
 }
 void printFromDouble(double d, bool &valid_range)
 {
-	if (d < 0 || d > 127)
+	if (d < 0 || d > 127 || (d == 0 && valid_range == false))
 		std::cout << "char: impossible" << std::endl;
 	else if (!isprint(static_cast<char>(d)))
 		std::cout << "char: Non displayable" << std::endl;
@@ -157,7 +157,6 @@ double convertToDouble(const std::string &input, bool &valid_range)
 {
 	char *endptr;
 	double val = strtod(input.c_str(), &endptr);
-
 	if (*endptr != '\0')
 		return 0.0;
 
@@ -166,7 +165,6 @@ double convertToDouble(const std::string &input, bool &valid_range)
 		// std::cout << "overflow double or underflow double" << std::endl;
 		return 0.0;
 	}
-
 	valid_range = true;
 	return val;
 }
