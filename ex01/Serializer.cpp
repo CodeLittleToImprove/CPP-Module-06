@@ -1,8 +1,5 @@
 #include "Serializer.hpp"
 
-#include <algorithm>
-#include <iomanip>
-
 // Default constructor
 Serializer::Serializer()
 {

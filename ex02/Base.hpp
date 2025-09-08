@@ -2,7 +2,6 @@
 
 # include <iostream>
 # include <cstdlib>
-# include "A.hpp"
 
 class Base
 {
@@ -12,5 +11,9 @@ class Base
 		// Base& operator=(const Base& other);
 	public:
 		virtual ~Base();
-		Base* generate(void);
+
 };
+
+Base* generate(void);
+void identify(Base* p);
+void identify(Base& p);

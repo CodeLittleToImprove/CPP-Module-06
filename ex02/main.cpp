@@ -12,9 +12,20 @@
 
 #include <cmath>
 #include <math.h>
-#include "Serializer.hpp"
+#include "Base.hpp"
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
 
 int main()
 {
+	// first identify via pointer
+	Base *base;
+	base = generate();
+	identify(base);
+
+	// second identify via refence
+	identify(*base);
+
 	return 0;
 }
