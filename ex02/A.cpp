@@ -1,29 +1,14 @@
-#include "Base.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   A.cpp                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbui-quo <tbui-quo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/08 15:46:05 by tbui-quo          #+#    #+#             */
+/*   Updated: 2025/09/08 15:46:06 by tbui-quo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// // Default constructor
-// Base::Base()
-// {
-// 	// std::cout << "Default constructor called" << std::endl;
-// }
-//
-// // Copy constructor
-// Base::Base(const Base &other)
-// {
-// 	(void) other;
-// 	// std::cout << "Copy constructor called" << std::endl;
-// }
-//
-// // Copy Assignment operator overload
-// Base &Base::operator=(const Base &other)
-// {
-// 	(void) other;
-// 	// std::cout << "Copy assignment operator called" << std::endl;
-// 	return (*this);
-// }
+#include "A.hpp"
 
-// Destructor
-// Base::~Base(void)
-// {
-// 	// std::cout << "Destructor called" << std::endl;
-// }
-//

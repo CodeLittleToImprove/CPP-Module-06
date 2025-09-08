@@ -60,8 +60,8 @@ test: $(TARGET)
 	@./$(TARGET) 2.71828
 	@echo "---- Test 5: nan ----"
 	@./$(TARGET) nan
-	@echo "---- Test 6: inf ----"
-	@./$(TARGET) inf
+	@echo "---- Test 6: +inf ----"
+	@./$(TARGET) +inf
 	@echo "---- Test 7: string ----"
 	@./$(TARGET) hello
 	@echo "---- Test 9: nanf ----"

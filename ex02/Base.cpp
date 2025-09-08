@@ -33,9 +33,9 @@ Base::~Base(void)
 
 Base *generate(void)
 {
-	srand(time(NULL));
+	// srand(static_cast<unsigned int>(clock()));
 	int n = rand() % 3;
-	std::cout << n << std::endl;
+	// std::cout << n << std::endl;
 	switch (n)
 	{
 		case 0:
@@ -45,47 +45,41 @@ Base *generate(void)
 		case 2:
 			return (new C);
 		default:
-			std::cout << "HOW? The Range is 0 - 2" << std::endl;
+			std::cout << "HOW? The range is 0 - 2" << std::endl;
+			return (NULL);
 	}
 }
 
 void identify(Base *p)
 {
-	if (dynamic_cast<A*>(p))
+	if (dynamic_cast<A*>(p) != NULL)
 		std::cout << "A" << std::endl;
-	else if (dynamic_cast<B*>(p))
+	else if (dynamic_cast<B*>(p) != NULL)
 		std::cout << "B" << std::endl;
-	else if (dynamic_cast<C*>(p))
+	else if (dynamic_cast<C*>(p) != NULL)
 		std::cout << "C" << std::endl;
 }
 
-void identify(Base &p)
+void identify(Base& p)
 {
 	try
 	{
-		A &a = dynamic_cast<A&>(p);
-		(void)a;
+		dynamic_cast<A&>(p);
 		std::cout << "A" << std::endl;
 	}
-	catch (std::exception e)
-	{
-	}
+	catch (std::exception e) {}
+
 	try
 	{
-		B &b = dynamic_cast<B&>(p);
-		(void)b;
+		dynamic_cast<B&>(p);
 		std::cout << "B" << std::endl;
 	}
-	catch (std::exception e)
-	{
-	}
+	catch (std::exception e) {}
+
 	try
 	{
-		C &b = dynamic_cast<C&>(p);
+		dynamic_cast<C&>(p);
 		std::cout << "C" << std::endl;
 	}
-	catch (std::exception e)
-	{
-		// dynamic_cast<C *>(&p);
-	}
+	catch (std::exception e) {}
 }

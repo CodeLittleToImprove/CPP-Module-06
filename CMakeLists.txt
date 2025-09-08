@@ -7,7 +7,9 @@ set(CMAKE_CXX_STANDARD 98)
 add_executable(cpp06_ex00
         ex00/ScalarConverter.cpp
         ex00/ScalarConverter.hpp
-        ex00/main.cpp)
+        ex00/main.cpp
+        ex00/converters.cpp
+        ex00/printers.cpp)
 
 add_executable(cpp06_ex01
         ex01/Serializer.cpp
@@ -19,4 +21,6 @@ add_executable(cpp06_ex02
         ex02/Base.hpp
         ex02/A.cpp
         ex02/A.hpp
-        ex02/main.cpp)
+        ex02/main.cpp
+        ex02/B.cpp
+        ex02/C.cpp)
