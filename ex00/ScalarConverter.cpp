@@ -85,7 +85,8 @@ LiteralType detectNumericalLiteral(const std::string &str)
 		{
 			hasDigits = true;
 		}
-		else if (c == '.' && !hasDecimalPoint && str[0] != '.')
+		// need to check the new condition if this not break anything?
+		else if (c == '.' && !hasDecimalPoint && str[0] != '.' && str[str.size() - 1] != '.')
 		{
 			hasDecimalPoint = true;
 		}
