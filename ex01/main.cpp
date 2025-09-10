@@ -10,14 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cmath>
-#include <math.h>
 #include "Serializer.hpp"
 
 int main()
 {
 	Data d;
-	d.value = "cats are cute";
+	d.value = "cats are the cutest animals in the world";
 
 	std::cout << "Original Data object address: " << &d << std::endl;
 

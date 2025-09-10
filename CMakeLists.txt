@@ -11,6 +11,14 @@ add_executable(cpp06_ex00
         ex00/converters.cpp
         ex00/printers.cpp)
 
+# Register test runs
+enable_testing()
+add_test(NAME negDouble_nbr COMMAND cpp06_ex00 -42.01)
+add_test(NAME double_nbrChar COMMAND 42.01a)
+
+#add_test(NAME run_with_input2 COMMAND my_app input2.txt)
+#add_test(NAME run_with_input3 COMMAND my_app input3.txt)
+
 add_executable(cpp06_ex01
         ex01/Serializer.cpp
         ex01/Serializer.hpp

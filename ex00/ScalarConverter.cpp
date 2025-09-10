@@ -144,7 +144,7 @@ void ScalarConverter::convert(const std::string &input)
 		case TYPE_INT:
 		{
 			int i = convertToInt(input, valid_range);
-			printFromInt(i, valid_range); // need to when printing to check if valid int value
+			printFromInt(i, valid_range);
 			break;
 		}
 		case TYPE_FLOAT:

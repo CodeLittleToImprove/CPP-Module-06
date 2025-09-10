@@ -50,21 +50,25 @@ re: fclean all
 # Run tests
 test: $(TARGET)
 	@echo "Running tests..."
-	@echo "---- Test 1: integer ----"
+	@echo "---- Test 1: integer: 42 ----"
 	@./$(TARGET) 42
-	@echo "---- Test 2: char ----"
+	@echo "---- Test 2: char: a ----"
 	@./$(TARGET) a
-	@echo "---- Test 3: float ----"
+	@echo "---- Test 3: float: 3.14f ----"
 	@./$(TARGET) 3.14f
-	@echo "---- Test 4: double ----"
+	@echo "---- Test 4: double 2.71828 ----"
 	@./$(TARGET) 2.71828
 	@echo "---- Test 5: nan ----"
 	@./$(TARGET) nan
 	@echo "---- Test 6: +inf ----"
 	@./$(TARGET) +inf
-	@echo "---- Test 7: string ----"
+	@echo "---- Test 7: string: hello ----"
 	@./$(TARGET) hello
 	@echo "---- Test 9: nanf ----"
 	@./$(TARGET) nanf
-	@echo "---- Test 10: no argument ----"
-	@./$(TARGET) || true
+	@echo "---- Test 10: overflowint: 2147483648 ----"
+	@./$(TARGET) 2147483648
+	@echo "---- Test 11: underflowint: -2147483649 ----"
+	@./$(TARGET) -2147483649
+	@echo "---- Test 11: no argument ----"
+	@./$(TARGET)|| true
