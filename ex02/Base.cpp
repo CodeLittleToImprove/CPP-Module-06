@@ -4,27 +4,6 @@
 #include "B.hpp"
 #include "C.hpp"
 
-// // Default constructor
-// Base::Base()
-// {
-// 	// std::cout << "Default constructor called" << std::endl;
-// }
-//
-// // Copy constructor
-// Base::Base(const Base &other)
-// {
-// 	(void) other;
-// 	// std::cout << "Copy constructor called" << std::endl;
-// }
-//
-// // Copy Assignment operator overload
-// Base &Base::operator=(const Base &other)
-// {
-// 	(void) other;
-// 	// std::cout << "Copy assignment operator called" << std::endl;
-// 	return (*this);
-// }
-
 // Destructor
 Base::~Base(void)
 {
@@ -33,9 +12,7 @@ Base::~Base(void)
 
 Base *generate(void)
 {
-	// srand(static_cast<unsigned int>(clock()));
 	int n = rand() % 3;
-	// std::cout << n << std::endl;
 	switch (n)
 	{
 		case 0:

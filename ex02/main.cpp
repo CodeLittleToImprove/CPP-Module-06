@@ -38,15 +38,15 @@ int main()
 
 	//random test
 	std::cout << YELLOW << "\n[ Random test like subject requirement ]" << RESET << std::endl;
-	srand(static_cast<unsigned int>(clock()));
+	srand(static_cast<unsigned int>(time(NULL)));
 	Base *base;
 	base = generate(); //base points now to an object A or B or C
 	identify(base); // here I can throw base directly because its expecting a pointer
-	identify(*base); // here I have to deference it and throw the object itself in
+	// identify(*base); // here I have to deference it and throw the object itself in
 
 	// or the long way to put in as a reference
-	// Base &ref = *base;
-	// identify(ref);
+	Base &ref = *base;
+	identify(ref);
 	delete base;
 
 	//run random test 10 times
